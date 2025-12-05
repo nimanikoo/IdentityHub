@@ -10,4 +10,14 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Middlewares\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IdentityHub.Application\IdentityHub.Application.csproj" />
+    <ProjectReference Include="..\IdentityHub.Infrastructure\IdentityHub.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
