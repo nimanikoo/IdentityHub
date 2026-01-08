@@ -1,12 +1,11 @@
 using IdentityHub.Application.Common.Interfaces;
 using IdentityHub.Application.Common.Models;
+using IdentityHub.Application.Requests.Command;
 using IdentityHub.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace IdentityHub.Application.Features.Accounts.Commands.ResetPassword;
-
-public record ResetPasswordCommand(string PhoneNumber, string OtpCode, string NewPassword) : IRequest<Result<string>>;
+namespace IdentityHub.Application.Handlers.Command.Account;
 
 public class ResetPasswordHandler : IRequestHandler<ResetPasswordCommand, Result<string>>
 {

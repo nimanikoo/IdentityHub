@@ -1,4 +1,4 @@
-using IdentityHub.Application;
+using IdentityHub.Application.Extension;
 using IdentityHub.Domain.Entities;
 using IdentityHub.Infrastructure.Extension;
 using IdentityHub.Infrastructure.Persistence.Contexts;
@@ -22,7 +22,6 @@ using (var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<ApplicationDbContext>();
         var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
 
-        // اعمال مایگریشن‌ها به صورت خودکار (اختیاری - در پروداکشن دستی بهتر است)
         await context.Database.MigrateAsync();
 
         // Seed Roles if not exist

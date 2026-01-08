@@ -3,9 +3,9 @@ using IdentityHub.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace IdentityHub.Application.Features.Accounts.Commands.Register;
+namespace IdentityHub.Application.Handlers.Command.Account;
 
-public record RegisterCommand(string Username, string Password, string PhoneNumber, string Email) : IRequest<Result<string>>;
+public record RegisterCommand(string Username, string Password, string PhoneNumber, string Email, string FirstName , string LastName) : IRequest<Result<string>>;
 
 
 public class RegisterHandler : IRequestHandler<RegisterCommand, Result<string>>
@@ -21,15 +21,23 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, Result<string>>
     {
         if ( _userManager.Users.Any(u => u.UserName == request.Username))
             return Result<string>.Failure("DuplicateUser", "این نام کاربری قبلاً گرفته شده است.");
+        
+        var existingPhone = _userManager.Users.Any(u => u.PhoneNumber == request.PhoneNumber);
+        if (existingPhone) 
+        {
+            throw new Exception("این شماره تلفن قبلاً ثبت شده است.");
+        }
 
         var user = new ApplicationUser
         {
             UserName = request.Username,
             Email = request.Email,
             PhoneNumber = request.PhoneNumber,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
             SecurityStamp = Guid.NewGuid().ToString()
         };
-
+        
         var result = await _userManager.CreateAsync(user, request.Password);
 
         if (!result.Succeeded)

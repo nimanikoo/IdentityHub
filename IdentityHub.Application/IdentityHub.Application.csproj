@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Handlers\" />
+    <Folder Include="Handlers\Query\" />
+    <Folder Include="Requests\Query\" />
     <Folder Include="Validators\" />
   </ItemGroup>
 

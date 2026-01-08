@@ -3,7 +3,7 @@ using IdentityHub.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace IdentityHub.Application.Features.Auth.Commands;
+namespace IdentityHub.Application.Handlers.Command.Auth;
 
 public record ResetPasswordCommand(string PhoneNumber, string Code, string NewPassword) : IRequest<IdentityResult>;
 

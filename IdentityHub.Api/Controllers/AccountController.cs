@@ -1,7 +1,11 @@
-using IdentityHub.Application.Features.Accounts.Commands.Register;
-using IdentityHub.Application.Features.Auth.Commands;
+using IdentityHub.Application.Common.Models;
+using IdentityHub.Application.DTOs;
+using IdentityHub.Application.Handlers.Command.Account;
+using IdentityHub.Application.Handlers.Command.Auth;
+using IdentityHub.Application.Requests.Command;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ResetPasswordCommand = IdentityHub.Application.Requests.Command.ResetPasswordCommand;
 
 namespace IdentityHub.Api.Controllers;
 
@@ -23,17 +27,32 @@ public class AccountController : ControllerBase
         return result.Succeeded ? Ok(result) : BadRequest(result);
     }
 
-    [HttpPost("send-otp")]
+    [HttpPost("otp")]
     public async Task<IActionResult> SendOtp([FromBody] SendOtpCommand command)
     {
         var result = await _mediator.Send(command);
         return result.Succeeded ? Ok(result) : BadRequest(result);
     }
 
-    [HttpPost("reset-password")]
+    [HttpPost("password/reset")]
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
     {
         var result = await _mediator.Send(command);
         return result.Succeeded ? Ok(result) : BadRequest(result);
+    }
+    
+    [HttpPost("token/refresh")]
+    [ProducesResponseType(typeof(Result<AuthResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<AuthResponse>), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenCommand command)
+    {
+        var result = await _mediator.Send(command);
+
+        if (!result.Succeeded)
+        {
+            return BadRequest(result);
+        }
+
+        return Ok(result);
     }
 }
