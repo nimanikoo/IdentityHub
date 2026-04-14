@@ -43,8 +43,7 @@ public static class DependencyInjection
             })
             .AddServer(options =>
             {
-                options.SetTokenEndpointUris("/connect/token")
-                       .SetLogoutEndpointUris("/connect/logout");
+                options.SetTokenEndpointUris("/connect/token");
 
                 options.AllowPasswordFlow()
                        .AllowRefreshTokenFlow()
@@ -54,8 +53,7 @@ public static class DependencyInjection
                        .AddDevelopmentSigningCertificate();
 
                 options.UseAspNetCore()
-                       .EnableTokenEndpointPassthrough()
-                       .EnableLogoutEndpointPassthrough();
+                       .EnableTokenEndpointPassthrough();
 
                 options.AddEventHandler<OpenIddictServerEvents.ProcessSignInContext>(builder =>
                 {
@@ -88,7 +86,6 @@ public static class DependencyInjection
             })
             .AddValidation(options =>
             {
-                options.UseLocalServer();
                 options.UseAspNetCore();
             });
 
